@@ -1,0 +1,25 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  height: 20px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.table-container {
+  display: flex;
+}
+
+button {
+  height: 30px;
+  width: 30px;
+}
