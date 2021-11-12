@@ -2,51 +2,66 @@ import React, { useState } from "react";
 import InputInLine from "../InputInLine";
 import "./table.css";
 
-export default function Table(props) {
+const Table = (props) => {
   const [defaultHeading, setDefaultHeading] = useState(["Entry 1", "Entry 2"]);
   const [dataSource, setDataSource] = useState([
-    [1, 2],
-    [3, 4],
-    [5, 6],
-    [7, 8],
-    [9, 10],
+    { id: 31231, "Entry 1": 1, "Entry 2": 3 },
+    { id: 3123, "Entry 1": 2, "Entry 2": 4 },
+    { id: 3133, "Entry 1": 7, "Entry 2": 2 },
   ]);
+  console.log(Object.keys(dataSource));
 
   const handleHeader = () => {
     setDefaultHeading((prev) => [...prev, "Entry " + (prev.length + 1)]);
   };
 
-  const handleNewEntry = () => {
-    setDataSource((prev) => [...prev, [1, 2]]);
+  const handleNewRow = () => {
+    setDataSource((prev) => [...prev, {}]);
+  };
+
+  const handleNewColumn = () => {};
+
+  const handleNewEntry = (args) => {
+    console.log(args);
   };
 
   const tableContent = (
     <table>
-      <tr>
-        {defaultHeading.map((column) => (
-          <th key={column}>{column}</th>
-        ))}
-        <button onClick={handleHeader}>+</button>
-      </tr>
-      {dataSource.map((row) => (
+      <thead>
         <tr>
-          {defaultHeading.map((list, index) => (
-            <td key={index}>{row[index]}</td>
+          {defaultHeading.map((column) => (
+            <th key={column}>
+              <InputInLine inputText={column} />
+            </th>
           ))}
+          <th>
+            <button onClick={handleHeader}>+</button>
+          </th>
         </tr>
-      ))}
-      <tr>
-        <td>
-          <InputInLine />
-        </td>
-      </tr>
+      </thead>
+      <tbody>
+        {dataSource.map((row) => (
+          <tr key={row["id"]}>
+            {defaultHeading.map((column, rowIndex) => (
+              <td key={column}>
+                <InputInLine
+                  inputText={row[column]}
+                  callback={handleNewEntry}
+                />
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 
   return (
     <div>
       {tableContent}
-      <button onClick={handleNewEntry}>+</button>
+      <button onClick={handleNewRow}>+</button>
     </div>
   );
-}
+};
+
+export default Table;
