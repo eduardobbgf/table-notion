@@ -72,7 +72,7 @@ const Table = (props) => {
       <thead>
         <tr>
           {Object.values(defaultHeading).map((column) => (
-            <th key={column.id}>
+            <th key={column.id} className="table-column">
               <InputInLine
                 inputText={column.name}
                 callback={handleChangeHeading}
@@ -80,7 +80,7 @@ const Table = (props) => {
               />
             </th>
           ))}
-          <th>
+          <th className="add-column">
             <button onClick={handleHeader}>+</button>
           </th>
         </tr>
@@ -89,7 +89,7 @@ const Table = (props) => {
         {dataSource.map((row) => (
           <tr key={row["id"]}>
             {Object.values(defaultHeading).map((column) => (
-              <td key={column.id}>
+              <td key={column.id} className="table-column">
                 <InputInLine
                   inputText={row[column.name]}
                   callback={handleNewEntry}
@@ -98,6 +98,7 @@ const Table = (props) => {
                 />
               </td>
             ))}
+            <td className="add-column" />
           </tr>
         ))}
       </tbody>

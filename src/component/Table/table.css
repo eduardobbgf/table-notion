@@ -4,12 +4,23 @@ table {
   width: 100%;
 }
 
-td,
-th {
-  border: 1px solid #dddddd;
+.table-column {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
   text-align: left;
-  height: 100%;
   width: 200px;
+  height: 22px;
+}
+
+td:not(:last-child) {
+  border-right: 1px solid #dddddd;
+}
+
+.add-column {
+  width: 40px;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  text-align: left;
   height: 22px;
 }
 
