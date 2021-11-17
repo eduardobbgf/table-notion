@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./input-in-line.css";
 
 const InputInLine = (props) => {
-  const { callback, inputText } = props;
+  const { callback, inputText, rowKey, columnName, columnId } = props;
   const [toInput, setToInput] = useState(false);
 
   const handleToInput = () => {
@@ -11,7 +11,11 @@ const InputInLine = (props) => {
 
   const handleInputChange = (e) => {
     if (e.target.value && typeof callback === "function") {
-      callback(e.target.value);
+      if (rowKey) {
+        callback(e.target.value, rowKey, columnName);
+      } else {
+        callback(e.target.value, columnId);
+      }
     }
 
     setToInput(false);
@@ -20,7 +24,11 @@ const InputInLine = (props) => {
   const handleInputChangeKeyDown = (e) => {
     if (e.keyCode === 13) {
       if (typeof callback === "function") {
-        callback(e.target.value);
+        if (rowKey) {
+          callback(e.target.value, rowKey, columnName);
+        } else {
+          callback(e.target.value, columnId);
+        }
       }
       setToInput(false);
     }
