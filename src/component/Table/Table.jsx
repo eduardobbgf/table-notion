@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useMemo } from "react";
 import InputInLine from "../InputInLine";
+import TableContext from "../../context/table-context";
 import "./table.css";
 
 const Table = (props) => {
-  const [defaultHeading, setDefaultHeading] = useState([
-    { id: 32, name: "Entry 1" },
-    { id: 47, name: "Entry 2" },
-  ]);
-  const [dataSource, setDataSource] = useState([
-    { id: 31231, "Entry 1": 1, "Entry 2": 3 },
-    { id: 3123, "Entry 1": 2, "Entry 2": 4 },
-    { id: 3133, "Entry 1": 7, "Entry 2": 2 },
-  ]);
+  const { defaultHeading, setDefaultHeading, dataSource, setDataSource } =
+    useContext(TableContext);
+
+  const tableData = useMemo(() => {
+    return [...dataSource];
+  }, [dataSource]);
 
   const handleHeader = () => {
     setDefaultHeading((prev) => [
@@ -54,17 +52,15 @@ const Table = (props) => {
 
     setDataSource((prev) => {
       const newArr = prev.map((element) => {
-        const newEl = element;
+        const newEl = { ...element };
         const prevName = newEl[prevColumnName];
-
+        delete newEl[prevColumnName];
         newEl[newColumnName] = prevName;
         return newEl;
       });
 
       return newArr;
     });
-    console.log(defaultHeading);
-    console.log(dataSource);
   };
 
   const tableContent = (
@@ -86,7 +82,7 @@ const Table = (props) => {
         </tr>
       </thead>
       <tbody>
-        {dataSource.map((row) => (
+        {tableData.map((row) => (
           <tr key={row["id"]}>
             {Object.values(defaultHeading).map((column) => (
               <td key={column.id} className="table-column">
